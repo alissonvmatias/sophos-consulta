@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Query;
+use App\Models\Atendimentos;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,10 +14,11 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->date('data');
+            $table->string('done');
             $table->string('title');
             $table->string('motive');
-            $table->date('date');
-            $table->foreignIdFor(Query::class);
+            $table->foreignIdFor(Atendimentos::class);
             $table->timestamps();
         });
     }

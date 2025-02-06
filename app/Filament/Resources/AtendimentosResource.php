@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\TypeAttendEnum;
+use App\Enums\StatusClientEnum;
 use App\Filament\Resources\AtendimentosResource\Pages;
 use App\Filament\Resources\AtendimentosResource\RelationManagers;
 use App\Models\Atendimentos;
@@ -21,7 +23,7 @@ use Filament\Forms\Components\Section;
 
 class AtendimentosResource extends Resource
 {
-    protected static ?string $model = Query::class;
+    protected static ?string $model = Atendimentos::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -31,32 +33,39 @@ class AtendimentosResource extends Resource
             ->schema([
                 Section::make()->schema([
                 Forms\Components\TextInput::make('cnpj')
+                    ->label('CNPJ')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('social_reason')
+                    ->label('Razão Social')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('status')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('status')
+                    ->options(StatusClientEnum::class)
+                    ->required(),
                 Forms\Components\TextInput::make('situation')
+                    ->label('Situação')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('attendant')
+                    ->label('Consultor')
                     ->required()
                     ->dehydrateStateUsing(fn (string $state): string => ucwords($state))
                     ->maxLength(255)
                     ])->columns(2),
                 Section::make()->schema([
-                Forms\Components\TextInput::make('type_attend')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Select::make('type_attend')
+                    ->label('Tipo de Atendimento')
+                    ->options(TypeAttendEnum::class)
+                    ->required(),
                 Forms\Components\TextInput::make('num_ticket')
+                    ->label('N* Ticket')
                     ->required()
                     ->maxLength(255),
                     ])->columns(1),
                     Section::make()->schema([
                 Forms\Components\TextInput::make('observation')
+                    ->label('Observação')
                     ->required()
                     ->maxLength(255)
                     ])
@@ -71,20 +80,27 @@ class AtendimentosResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('cnpj')
+                    ->label('CNPJ')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('social_reason')
+                    ->label('Razão Social')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('status')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('situation')
+                    ->label('Situação')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('attendant')
+                    ->label('Atendente')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type_attend')
+                    ->label('Tipo de Atendimento')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('num_ticket')
+                    ->label('N* Ticket')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('observation')
+                    ->label('Observação')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

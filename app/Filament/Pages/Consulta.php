@@ -50,7 +50,7 @@ class Consulta extends Page
                     TextInput::make('situation')
                         ->label('Situação'),
                     TextInput::make('system_current')
-                        ->label('CNPJ')
+                        ->label('Sistema Atual')
 
                     
                 ])
