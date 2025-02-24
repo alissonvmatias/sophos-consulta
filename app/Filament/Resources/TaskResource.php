@@ -23,6 +23,11 @@ class TaskResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\DatePicker::make('data'),
+                Forms\Components\TextInput::make('done')
+                    ->label('Finalizar')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('title')
                     ->label('Título')
                     ->required()
@@ -31,10 +36,7 @@ class TaskResource extends Resource
                     ->label('Motivo')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('date')
-                    ->label('Data')
-                    ->required(),
-                Forms\Components\TextInput::make('query_id')
+                Forms\Components\TextInput::make('atendimentos_id')
                     ->required()
                     ->numeric(),
             ]);
@@ -44,17 +46,21 @@ class TaskResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('data')
+                    ->label('Data')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('done')
+                    ->label('Finalizar')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('motive')
                     ->label('Motivo')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('date')
-                    ->label('Data')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('query_id')
+                Tables\Columns\TextColumn::make('atendimentos_id')
+                    ->label('ID Atendimento')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
